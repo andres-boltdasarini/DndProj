@@ -16,4 +16,8 @@
     <ProjectReference Include="..\DndProj.Contracts\DndProj.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\List\" />
+  </ItemGroup>
+
 </Project>

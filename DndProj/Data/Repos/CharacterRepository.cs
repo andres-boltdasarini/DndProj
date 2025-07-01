@@ -6,6 +6,8 @@ namespace DndProj.Data.Repos
     public class CharacterRepository : ICharacterRepository
     {
         private readonly IWebHostEnvironment _env;
+        private const string DataFolder = "Data";
+        private const string ListFolder = "List";
 
         public CharacterRepository(IWebHostEnvironment env)
         {
@@ -21,14 +23,19 @@ namespace DndProj.Data.Repos
 
         public async Task<string> GetCharacterFileContentAsync(string fileName)
         {
-            string filePath = Path.Combine(_env.ContentRootPath, fileName);
+            string listFolderPath = Path.Combine(_env.ContentRootPath, DataFolder, ListFolder);
+            string filePath = Path.Combine(listFolderPath, fileName);
             return await System.IO.File.ReadAllTextAsync(filePath);
         }
 
         public async Task<string> SaveCharacterAsync(AddCharacterRequest request)
         {
+            // Создаём папку List внутри Data, если её нет
+            string listFolderPath = Path.Combine(_env.ContentRootPath, DataFolder, ListFolder);
+            Directory.CreateDirectory(listFolderPath);
+
             string fileName = $"character_{DateTime.Now:yyyyMMddHHmmss}.json";
-            string filePath = Path.Combine(_env.ContentRootPath, fileName);
+            string filePath = Path.Combine(listFolderPath, fileName);
 
             var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
             string json = JsonSerializer.Serialize(request, jsonOptions);
