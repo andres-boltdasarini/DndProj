@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DndProj.Contracts.Models.Character
 {
-    public class Сharacteristics
+    public class Feature
     {
         public int? Strength { get; set; }
 

@@ -28,9 +28,8 @@ namespace DndProj.Data.Repos
             return await System.IO.File.ReadAllTextAsync(filePath);
         }
 
-        public async Task<string> SaveCharacterAsync(AddCharacterRequest request)
+        public async Task<string> SaveCharacterAsync(CharacterCreationRequest request)
         {
-            // Создаём папку List внутри Data, если её нет
             string listFolderPath = Path.Combine(_env.ContentRootPath, DataFolder, ListFolder);
             Directory.CreateDirectory(listFolderPath);
 

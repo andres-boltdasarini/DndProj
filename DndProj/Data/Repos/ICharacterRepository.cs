@@ -5,7 +5,7 @@ namespace DndProj.Data.Repos
     public interface ICharacterRepository
     {
         Task<string> GetCharacterFileContentAsync(string fileName);
-        Task<string> SaveCharacterAsync(AddCharacterRequest request);
+        Task<string> SaveCharacterAsync(CharacterCreationRequest request);
         bool IsValidFileName(string fileName);
     }
 }

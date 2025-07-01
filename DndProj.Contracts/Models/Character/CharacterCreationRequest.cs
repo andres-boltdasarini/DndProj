@@ -5,7 +5,7 @@ using System.Reflection.PortableExecutable;
 
 namespace DndProj.Contracts.Models.Character
 {
-    public class AddCharacterRequest
+    public class CharacterCreationRequest
     {
         public string? Name { get; set; }
         public string? Worldview { get; set; }
@@ -19,15 +19,15 @@ namespace DndProj.Contracts.Models.Character
         public Profession? Profession { get; set; }
         public Race? Race { get; set; }
         public Skills? Skills { get; set; }
-        public Characteristics? Characteristics { get; set; }
+        public Feature? Feature { get; set; }
 
 
-        public AddCharacterRequest()
+        public CharacterCreationRequest()
         {
             Profession = new Profession();
             Race = new Race();
             Skills = new Skills();
-            Characteristics = new Characteristics();
+            Feature = new Feature();
         }
 
     }

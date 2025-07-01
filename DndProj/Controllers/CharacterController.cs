@@ -42,7 +42,7 @@ namespace HomeApi.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> Add([FromBody] AddCharacterRequest request)
+        public async Task<IActionResult> Add([FromBody] CharacterCreationRequest request)
         {
             string fileName = await _characterRepository.SaveCharacterAsync(request);
             return Ok($"{fileName} добавлен!");
