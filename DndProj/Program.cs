@@ -1,14 +1,14 @@
+using DndProj.Data.Repos;
 using FluentValidation.AspNetCore;
 using HomeApi.Contracts.Validation;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddCharacterRequestValidator>());
 
 
-// Другие сервисы
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {

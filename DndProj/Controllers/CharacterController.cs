@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using DndProj.Contracts.Models.Character;
+﻿using DndProj.Contracts.Models.Character;
+using DndProj.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,34 +9,30 @@ namespace HomeApi.Controllers
     [Route("[controller]")]
     public class CharacterController : ControllerBase
     {
-        private readonly IWebHostEnvironment _env;
+        private readonly ICharacterRepository _characterRepository;
 
-        public CharacterController(
-            IWebHostEnvironment env)
+        public CharacterController(ICharacterRepository characterRepository)
         {
-            _env = env;
+            _characterRepository = characterRepository;
         }
 
         [HttpGet]
         [Route("{fileName}")]
-        public IActionResult GetCharacterFile(string fileName)
+        public async Task<IActionResult> GetCharacterFile(string fileName)
         {
-            if (!fileName.StartsWith("character_") ||
-                !fileName.EndsWith(".json") ||
-                fileName.Contains(".."))
+            if (!_characterRepository.IsValidFileName(fileName))
             {
                 return BadRequest("Некорректное имя файла");
             }
 
-            string filePath = Path.Combine(_env.ContentRootPath, fileName);
-
-            if (!System.IO.File.Exists(filePath))
-                return NotFound("Файл не найден");
-
             try
             {
-                string jsonContent = System.IO.File.ReadAllText(filePath);
+                string jsonContent = await _characterRepository.GetCharacterFileContentAsync(fileName);
                 return Content(jsonContent, "application/json");
+            }
+            catch (FileNotFoundException)
+            {
+                return NotFound("Файл не найден");
             }
             catch
             {
@@ -46,18 +42,10 @@ namespace HomeApi.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public IActionResult Add([FromBody] AddCharacterRequest request)
+        public async Task<IActionResult> Add([FromBody] AddCharacterRequest request)
         {
-            string fileName = $"character_{DateTime.Now:yyyyMMddHHmmss}.json";
-            string rootPath = _env.ContentRootPath;
-            string filePath = Path.Combine(rootPath, fileName);
-
-            var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(request, jsonOptions);
-
-            System.IO.File.WriteAllText(filePath, json);
-
-            return StatusCode(200, $"{fileName} добавлен!");
+            string fileName = await _characterRepository.SaveCharacterAsync(request);
+            return Ok($"{fileName} добавлен!");
         }
     }
 }
