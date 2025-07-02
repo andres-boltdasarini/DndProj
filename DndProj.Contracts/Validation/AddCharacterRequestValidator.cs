@@ -11,12 +11,13 @@ namespace HomeApi.Contracts.Validation
             /* Зададим правила валидации */
 
             RuleFor(x => x.Name).NotEmpty(); // Проверим на null и на пустое свойство
-            //RuleFor(x => x.Strength).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
-            //RuleFor(x => x.Dexterity).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
-            //RuleFor(x => x.Vitality).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
-            //RuleFor(x => x.Intelligence).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
-            //RuleFor(x => x.Wisdom).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
-            //RuleFor(x => x.Charisma).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
+            // RuleFor(x => x.Worldview).NotEmpty();
+            // RuleFor(x => x.Gender).NotEmpty();
+            // RuleFor(x => x.Background).NotEmpty();
+            // RuleFor(x => x.Move).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
+            // RuleFor(x => x.Helth).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
+            // RuleFor(x => x.ClassArmor).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
+            // RuleFor(x => x.Initiative).NotEmpty().InclusiveBetween(1, 20).WithMessage("от 1 до 20");
         }
     }
 }
