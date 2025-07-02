@@ -47,5 +47,53 @@ namespace HomeApi.Controllers
             string fileName = await _characterRepository.SaveCharacterAsync(request);
             return Ok($"{fileName} добавлен!");
         }
+
+        [HttpPut]
+        [Route("Update/{fileName}")]
+        public async Task<IActionResult> Update(string fileName, [FromBody] CharacterUpdateRequest request)
+        {
+            if (!_characterRepository.IsValidFileName(fileName))
+            {
+                return BadRequest("Некорректное имя файла");
+            }
+
+            try
+            {
+                await _characterRepository.UpdateCharacterAsync(fileName, request);
+                return Ok($"Персонаж {fileName} успешно обновлён");
+            }
+            catch (FileNotFoundException)
+            {
+                return NotFound("Файл не найден");
+            }
+            catch
+            {
+                return StatusCode(500, "Ошибка при обновлении персонажа");
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete/{fileName}")]
+        public async Task<IActionResult> Delete(string fileName)
+        {
+            if (!_characterRepository.IsValidFileName(fileName))
+            {
+                return BadRequest("Некорректное имя файла");
+            }
+
+            try
+            {
+                await _characterRepository.DeleteCharacterAsync(fileName);
+                return Ok($"Персонаж {fileName} успешно удалён");
+            }
+            catch (FileNotFoundException)
+            {
+                return NotFound("Файл не найден");
+            }
+            catch
+            {
+                return StatusCode(500, "Ошибка при удалении персонажа");
+            }
+        }
     }
 }

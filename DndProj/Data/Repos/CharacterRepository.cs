@@ -43,5 +43,35 @@ namespace DndProj.Data.Repos
 
             return fileName;
         }
+
+         public async Task UpdateCharacterAsync(string fileName, CharacterUpdateRequest request)
+        {
+            string listFolderPath = Path.Combine(_env.ContentRootPath, DataFolder, ListFolder);
+            string filePath = Path.Combine(listFolderPath, fileName);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                throw new FileNotFoundException("Character file not found", fileName);
+            }
+
+            var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(request, jsonOptions);
+
+            await System.IO.File.WriteAllTextAsync(filePath, json);
+        }
+
+        public async Task DeleteCharacterAsync(string fileName)
+        {
+            string listFolderPath = Path.Combine(_env.ContentRootPath, DataFolder, ListFolder);
+            string filePath = Path.Combine(listFolderPath, fileName);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                throw new FileNotFoundException("Character file not found", fileName);
+            }
+
+            System.IO.File.Delete(filePath);
+            await Task.CompletedTask; // Для асинхронности, хотя операция синхронная
+        }
     }
 }

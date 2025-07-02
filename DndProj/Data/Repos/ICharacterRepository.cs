@@ -4,8 +4,10 @@ namespace DndProj.Data.Repos
 {
     public interface ICharacterRepository
     {
+        bool IsValidFileName(string fileName);
         Task<string> GetCharacterFileContentAsync(string fileName);
         Task<string> SaveCharacterAsync(CharacterCreationRequest request);
-        bool IsValidFileName(string fileName);
+        Task UpdateCharacterAsync(string fileName, CharacterUpdateRequest request);
+        Task DeleteCharacterAsync(string fileName);
     }
 }
