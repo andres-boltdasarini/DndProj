@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DndProj.Contracts.Models.Character
 {
+    // могут зависеть от множества факторов, включая расу, класс, уровень, черты
     public class Feature
     {
         public int? Strength { get; set; }

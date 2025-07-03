@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DndProj.Contracts.Models.Character
 {
+    // могут зависеть от множества факторов, включая Базовые характеристики, Владение навыком, Экспертиза
     public class Skills
     {
         public int? Athletics { get; set; }

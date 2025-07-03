@@ -13,18 +13,18 @@ namespace DndProj.Contracts.Models.Character
         public string? Background { get; set; }
 
         public int? Move { get; set; }
-        public int? Helth { get; set; }
+        public int? Health { get; set; } 
         public int? ClassArmor { get; set; }
         public int? Initiative { get; set; }
-        public Profession? Profession { get; set; }
+
         public Race? Race { get; set; }
         public Skills? Skills { get; set; }
         public Feature? Feature { get; set; }
-
+        public List<Profession> Professions { get; set; }
 
         public CharacterCreationRequest()
         {
-            Profession = new Profession();
+            Professions = new List<Profession>();
             Race = new Race();
             Skills = new Skills();
             Feature = new Feature();
