@@ -45,7 +45,9 @@ namespace HomeApi.Controllers
         public async Task<IActionResult> Add([FromBody] CharacterCreationRequest request)
         {
             string fileName = await _characterRepository.SaveCharacterAsync(request);
-            return Ok($"{fileName} добавлен!");
+            // return Ok($"{fileName} добавлен!");
+            string jsonContent = await _characterRepository.GetCharacterFileContentAsync(fileName);
+                return Content(jsonContent, "application/json");
         }
 
         [HttpPut]
