@@ -11,13 +11,14 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy.WithOrigins("https://dnd-api.blegaming.ru/", "https://dnd-api.blegaming.ru/front/")
+        // policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
-builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddCharacterRequestValidator>());
+builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ValidatorAddCharacterRequest>());
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>

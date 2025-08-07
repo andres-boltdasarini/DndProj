@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace HomeApi.Contracts.Validation
 {
-    public class AddCharacterRequestValidator : AbstractValidator<CharacterCreationRequest>
+    public class ValidatorAddCharacterRequest : AbstractValidator<CharacterCreationRequest>
     {
-        public AddCharacterRequestValidator()
+        public ValidatorAddCharacterRequest()
         {
 
             /* Зададим правила валидации */
