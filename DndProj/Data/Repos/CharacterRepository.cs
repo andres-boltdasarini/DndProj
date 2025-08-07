@@ -28,6 +28,42 @@ namespace DndProj.Data.Repos
             return await System.IO.File.ReadAllTextAsync(filePath);
         }
 
+        public async Task<IEnumerable<CharacterUpdateRequest>> GetCharacterFileListAsync()
+        {
+            string listFolderPath = Path.Combine(_env.ContentRootPath, DataFolder, ListFolder);
+            
+            if (!Directory.Exists(listFolderPath))
+            {
+                return Enumerable.Empty<CharacterUpdateRequest>();
+            }
+
+            var characterFiles = new List<CharacterUpdateRequest>();
+            var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+            foreach (var filePath in Directory.GetFiles(listFolderPath, "*.json"))
+            {
+                if (!Path.GetFileName(filePath).StartsWith("character_"))
+                    continue;
+
+                try
+                {
+                    var jsonContent = await File.ReadAllTextAsync(filePath);
+                    var characterData = JsonSerializer.Deserialize<CharacterUpdateRequest>(jsonContent, jsonOptions);
+                    if (characterData != null)
+                    {
+                        characterFiles.Add(characterData);
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Пропускаем файлы с некорректным JSON
+                    continue;
+                }
+            }
+
+            return characterFiles;
+        }
+
         public async Task<string> SaveCharacterAsync(CharacterCreationRequest request)
         {
             string listFolderPath = Path.Combine(_env.ContentRootPath, DataFolder, ListFolder);

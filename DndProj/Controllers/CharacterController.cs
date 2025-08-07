@@ -40,6 +40,20 @@ namespace HomeApi.Controllers
             }
         }
 
+        [HttpGet("List")]
+        public async Task<IActionResult> GetCharacterList()
+        {
+            try
+            {
+                var characters = await _characterRepository.GetCharacterFileListAsync();
+                return Ok(characters);
+            }
+            catch
+            {
+                return StatusCode(500, "Ошибка при получении списка персонажей");
+            }
+        }
+
         [HttpPost]
         [Route("Add")]
         public async Task<IActionResult> Add([FromBody] CharacterCreationRequest request)

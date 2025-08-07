@@ -6,6 +6,7 @@ namespace DndProj.Data.Repos
     {
         bool IsValidFileName(string fileName);
         Task<string> GetCharacterFileContentAsync(string fileName);
+        Task<IEnumerable<CharacterUpdateRequest>> GetCharacterFileListAsync();
         Task<string> SaveCharacterAsync(CharacterCreationRequest request);
         Task UpdateCharacterAsync(string fileName, CharacterUpdateRequest request);
         Task DeleteCharacterAsync(string fileName);
