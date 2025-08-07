@@ -6,7 +6,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://dnd-api.blegaming.ru/", "https://dnd-api.blegaming.ru/front/")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddCharacterRequestValidator>());
@@ -18,7 +26,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
+app.UseCors(); 
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseMiddleware<LoggingMiddleware>();
